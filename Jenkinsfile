@@ -5,16 +5,11 @@ pipeline {
            {
        steps {
          git branch: 'main',
-         url: 'https://github.com/Shrikant155/myproject.git',
-          credentialsId: 'hithub-cred-id'
+         url: 'git@github.com:Shrikant155/devsecops-project.git',
+          credentialsId: 'github-cred-id'
        }
      }
-     stage('terraform-init') {
-          steps {
-                
-
-          }
-      }
+    
      
      stage('sonarqube-test-code') {
             steps {
