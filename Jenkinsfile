@@ -113,9 +113,32 @@ stage('Start Minikube') {
       ])
     }
   }
-
-
      }
+         stage('monitoring-check') {
+      steps {
+        sh '''
+          echo "=== Checking Prometheus ==="
+          curl -s http://localhost:9090/-/healthy && echo "Prometheus is UP" || echo "Prometheus is DOWN"
+
+          echo "=== Checking Node Exporter ==="
+          curl -s http://localhost:9100/metrics | head -5 && echo "Node Exporter is UP" || echo "Node Exporter is DOWN"
+
+          echo "=== Checking Grafana ==="
+          curl -s http://localhost:3000/api/health | grep ok && echo "Grafana is UP" || echo "Grafana is DOWN"
+
+          echo "=== Prometheus Targets ==="
+          curl -s http://localhost:9090/api/v1/targets | python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+for t in data['data']['activeTargets']:
+    print(t['labels']['job'], '-', t['health'])
+"
+        '''
+      }
+    }
+
+
+
     
  }
 
