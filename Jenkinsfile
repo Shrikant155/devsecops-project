@@ -5,7 +5,7 @@ pipeline {
            {
        steps {
          git branch: 'main',
-         url: 'git@github.com:Shrikant155/devsecops-project.git',
+         url: 'https://github.com/Shrikant155/devsecops-project.git',
           credentialsId: 'github-cred-id'
        }
      }
