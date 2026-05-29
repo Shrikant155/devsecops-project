@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-project
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myproject1
+  template:
+    metadata:
+      labels:
+        app: myproject1
+    spec:
+      containers:
+        - name: myproject1
+          image: shrikant155/k8s-app:v5
+          ports:
+            - containerPort: 8081

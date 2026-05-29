@@ -1,0 +1,6 @@
+projectKey=shrikant-web-project-2
+serverUrl=http://localhost:9000
+serverVersion=25.2.0.102705
+dashboardUrl=http://localhost:9000/dashboard?id=shrikant-web-project-2
+ceTaskId=c2d4effa-75f2-4550-99ab-e02e14a1c2ee
+ceTaskUrl=http://localhost:9000/api/ce/task?id=c2d4effa-75f2-4550-99ab-e02e14a1c2ee

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beautiful Future UI</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      scroll-behavior:smooth;
+    }
+
+    :root{
+      --bg:#07111f;
+      --card:#101c2d;
+      --primary:#00c6ff;
+      --secondary:#7b61ff;
+      --text:#ffffff;
+      --muted:#b7c2d0;
+      --glass:rgba(255,255,255,0.08);
+      --border:rgba(255,255,255,0.12);
+    }
+
+    body{
+      font-family:'Poppins',sans-serif;
+      background:linear-gradient(135deg,#050816,#091421,#0f172a);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:'';
+      position:fixed;
+      width:600px;
+      height:600px;
+      background:radial-gradient(circle,var(--primary),transparent 70%);
+      top:-250px;
+      right:-200px;
+      opacity:.25;
+      filter:blur(60px);
+      z-index:-1;
+    }
+
+    body::after{
+      content:'';
+      position:fixed;
+      width:500px;
+      height:500px;
+      background:radial-gradient(circle,var(--secondary),transparent 70%);
+      bottom:-250px;
+      left:-150px;
+      opacity:.2;
+      filter:blur(70px);
+      z-index:-1;
+    }
+
+    header{
+      position:fixed;
+      width:100%;
+      top:0;
+      z-index:1000;
+      backdrop-filter:blur(12px);
+      background:rgba(0,0,0,.35);
+      border-bottom:1px solid var(--border);
+    }
+
+    nav{
+      max-width:1300px;
+      margin:auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px 40px;
+    }
+
+    .logo{
+      font-size:2rem;
+      font-weight:800;
+      background:linear-gradient(to right,var(--primary),#fff,var(--secondary));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    nav ul{
+      display:flex;
+      gap:30px;
+      list-style:none;
+    }
+
+    nav a{
+      text-decoration:none;
+      color:white;
+      transition:.3s;
+      font-weight:500;
+    }
+
+    nav a:hover{
+      color:var(--primary);
+    }
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:120px 20px 80px;
+      position:relative;
+    }
+
+    .hero-content{
+      max-width:900px;
+      animation:fadeUp 1s ease;
+    }
+
+    .hero h1{
+      font-size:5rem;
+      line-height:1.1;
+      margin-bottom:20px;
+      background:linear-gradient(to right,#fff,var(--primary),var(--secondary));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .hero p{
+      color:var(--muted);
+      font-size:1.2rem;
+      margin-bottom:40px;
+    }
+
+    .buttons{
+      display:flex;
+      gap:20px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:16px 34px;
+      border:none;
+      border-radius:14px;
+      font-size:1rem;
+      cursor:pointer;
+      transition:.4s;
+      font-weight:600;
+    }
+
+    .primary{
+      background:linear-gradient(135deg,var(--primary),var(--secondary));
+      color:white;
+      box-shadow:0 10px 30px rgba(0,198,255,.3);
+    }
+
+    .primary:hover{
+      transform:translateY(-5px) scale(1.03);
+    }
+
+    .secondary{
+      background:transparent;
+      border:1px solid var(--border);
+      color:white;
+      backdrop-filter:blur(10px);
+    }
+
+    .secondary:hover{
+      background:rgba(255,255,255,.08);
+    }
+
+    section{
+      padding:100px 30px;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:70px;
+    }
+
+    .section-title h2{
+      font-size:3rem;
+      margin-bottom:15px;
+    }
+
+    .section-title p{
+      color:var(--muted);
+      max-width:700px;
+      margin:auto;
+    }
+
+    .features{
+      max-width:1300px;
+      margin:auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:30px;
+    }
+
+    .card{
+      background:var(--glass);
+      border:1px solid var(--border);
+      backdrop-filter:blur(15px);
+      border-radius:25px;
+      padding:35px;
+      transition:.4s;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card::before{
+      content:'';
+      position:absolute;
+      width:120px;
+      height:120px;
+      background:linear-gradient(var(--primary),transparent);
+      top:-50px;
+      right:-50px;
+      opacity:.25;
+      border-radius:50%;
+    }
+
+    .card:hover{
+      transform:translateY(-12px);
+      border-color:rgba(255,255,255,.25);
+      box-shadow:0 20px 40px rgba(0,0,0,.3);
+    }
+
+    .card h3{
+      margin-bottom:15px;
+      font-size:1.5rem;
+    }
+
+    .card p{
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .stats{
+      max-width:1200px;
+      margin:auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:30px;
+    }
+
+    .stat-box{
+      text-align:center;
+      padding:40px;
+      background:var(--glass);
+      border-radius:25px;
+      border:1px solid var(--border);
+    }
+
+    .stat-box h3{
+      font-size:3rem;
+      color:var(--primary);
+      margin-bottom:10px;
+    }
+
+    .gallery{
+      max-width:1300px;
+      margin:auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:25px;
+    }
+
+    .gallery img{
+      width:100%;
+      height:320px;
+      object-fit:cover;
+      border-radius:25px;
+      transition:.4s;
+      border:2px solid rgba(255,255,255,.08);
+    }
+
+    .gallery img:hover{
+      transform:scale(1.03);
+    }
+
+    .pricing{
+      max-width:1300px;
+      margin:auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:30px;
+    }
+
+    .price-card{
+      padding:45px;
+      border-radius:30px;
+      background:var(--glass);
+      border:1px solid var(--border);
+      text-align:center;
+      transition:.4s;
+    }
+
+    .price-card:hover{
+      transform:translateY(-10px);
+      box-shadow:0 20px 40px rgba(0,0,0,.35);
+    }
+
+    .price-card h3{
+      font-size:2rem;
+      margin-bottom:15px;
+    }
+
+    .price{
+      font-size:4rem;
+      margin:25px 0;
+      color:var(--primary);
+    }
+
+    .price-card ul{
+      list-style:none;
+      margin-bottom:30px;
+    }
+
+    .price-card li{
+      margin:15px 0;
+      color:var(--muted);
+    }
+
+    .testimonials{
+      max-width:1200px;
+      margin:auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:30px;
+    }
+
+    .testimonial{
+      background:var(--glass);
+      border-radius:25px;
+      padding:35px;
+      border:1px solid var(--border);
+    }
+
+    .testimonial p{
+      color:var(--muted);
+      line-height:1.8;
+      margin-bottom:25px;
+    }
+
+    .testimonial h4{
+      color:var(--primary);
+    }
+
+    .contact{
+      max-width:800px;
+      margin:auto;
+      background:var(--glass);
+      padding:50px;
+      border-radius:30px;
+      border:1px solid var(--border);
+    }
+
+    .contact form{
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+
+    .contact input,
+    .contact textarea{
+      padding:18px;
+      border:none;
+      outline:none;
+      border-radius:15px;
+      background:rgba(255,255,255,.08);
+      color:white;
+      font-size:1rem;
+    }
+
+    .contact textarea{
+      min-height:160px;
+      resize:none;
+    }
+
+    footer{
+      text-align:center;
+      padding:50px 20px;
+      border-top:1px solid rgba(255,255,255,.1);
+      color:var(--muted);
+      margin-top:80px;
+    }
+
+    .floating{
+      position:absolute;
+      border-radius:50%;
+      background:rgba(255,255,255,.08);
+      animation:float 10s infinite linear;
+    }
+
+    .f1{
+      width:100px;
+      height:100px;
+      left:10%;
+      top:20%;
+    }
+
+    .f2{
+      width:150px;
+      height:150px;
+      right:15%;
+      bottom:20%;
+      animation-duration:14s;
+    }
+
+    .f3{
+      width:60px;
+      height:60px;
+      left:70%;
+      top:15%;
+      animation-duration:8s;
+    }
+
+    @keyframes float{
+      0%{transform:translateY(0px) rotate(0deg);}
+      50%{transform:translateY(-40px) rotate(180deg);}
+      100%{transform:translateY(0px) rotate(360deg);}
+    }
+
+    @keyframes fadeUp{
+      from{
+        opacity:0;
+        transform:translateY(40px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    @media(max-width:900px){
+      .hero h1{
+        font-size:3rem;
+      }
+
+      nav ul{
+        display:none;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">FutureUI</div>
+
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#stats">Stats</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="floating f1"></div>
+    <div class="floating f2"></div>
+    <div class="floating f3"></div>
+
+    <div class="hero-content">
+      <h1>Create Amazing Digital Experiences</h1>
+
+      <p>
+        A stunning futuristic website design built with pure HTML & CSS.
+        Beautiful gradients, glassmorphism cards, responsive layouts,
+        smooth animations and modern UI effects.
+      </p>
+
+      <div class="buttons">
+        <button class="btn primary">Get Started</button>
+        <button class="btn secondary">Explore More</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="section-title">
+      <h2>Awesome Features</h2>
+      <p>
+        Modern interface packed with elegant visuals and smooth interactions.
+      </p>
+    </div>
+
+    <div class="features">
+
+      <div class="card">
+        <h3>Modern Design</h3>
+        <p>
+          Elegant gradients, glassmorphism effects and futuristic layouts
+          designed for premium digital products.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Responsive Layout</h3>
+        <p>
+          Fully optimized for mobile, tablet and desktop screens with
+          smooth responsiveness.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Fast Performance</h3>
+        <p>
+          Lightweight and optimized code structure for blazing fast loading.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Animations</h3>
+        <p>
+          Smooth hover effects, transitions and floating animated elements.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Clean Code</h3>
+        <p>
+          Structured and beginner friendly HTML & CSS code with modern style.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Creative UI</h3>
+        <p>
+          Perfect for startups, portfolios, agencies and futuristic websites.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="stats">
+    <div class="section-title">
+      <h2>Our Achievements</h2>
+      <p>
+        Trusted by thousands of users around the world.
+      </p>
+    </div>
+
+    <div class="stats">
+
+      <div class="stat-box">
+        <h3>10K+</h3>
+        <p>Happy Users</p>
+      </div>
+
+      <div class="stat-box">
+        <h3>500+</h3>
+        <p>Projects Completed</p>
+      </div>
+
+      <div class="stat-box">
+        <h3>99%</h3>
+        <p>Client Satisfaction</p>
+      </div>
+
+      <div class="stat-box">
+        <h3>24/7</h3>
+        <p>Support System</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="gallery">
+    <div class="section-title">
+      <h2>Creative Gallery</h2>
+      <p>
+        Beautiful visual sections for modern websites.
+      </p>
+    </div>
+
+    <div class="gallery">
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop" alt="">
+
+      <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="">
+
+      <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="">
+
+      <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop" alt="">
+
+      <img src="https://images.unsplash.com/photo-1484417894907-623942c8ee29?q=80&w=1200&auto=format&fit=crop" alt="">
+
+      <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="">
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="section-title">
+      <h2>Pricing Plans</h2>
+      <p>
+        Choose a perfect plan for your business needs.
+      </p>
+    </div>
+
+    <div class="pricing">
+
+      <div class="price-card">
+        <h3>Starter</h3>
+        <div class="price">$19</div>
+
+        <ul>
+          <li>Basic Features</li>
+          <li>Responsive Design</li>
+          <li>Email Support</li>
+          <li>1GB Storage</li>
+        </ul>
+
+        <button class="btn primary">Choose Plan</button>
+      </div>
+
+      <div class="price-card">
+        <h3>Professional</h3>
+        <div class="price">$49</div>
+
+        <ul>
+          <li>Premium Features</li>
+          <li>Advanced UI</li>
+          <li>Priority Support</li>
+          <li>10GB Storage</li>
+        </ul>
+
+        <button class="btn primary">Choose Plan</button>
+      </div>
+
+      <div class="price-card">
+        <h3>Enterprise</h3>
+        <div class="price">$99</div>
+
+        <ul>
+          <li>Unlimited Access</li>
+          <li>Custom Features</li>
+          <li>24/7 Support</li>
+          <li>Unlimited Storage</li>
+        </ul>
+
+        <button class="btn primary">Choose Plan</button>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">
+      <h2>What Clients Say</h2>
+      <p>
+        Reviews from happy customers around the world.
+      </p>
+    </div>
+
+    <div class="testimonials">
+
+      <div class="testimonial">
+        <p>
+          “Absolutely stunning design. The UI looks modern and premium.
+          Easy to customize and very responsive.”
+        </p>
+
+        <h4>- Alex Morgan</h4>
+      </div>
+
+      <div class="testimonial">
+        <p>
+          “One of the most beautiful HTML templates I’ve ever used.
+          Smooth animations and amazing layout.”
+        </p>
+
+        <h4>- Sophia Lee</h4>
+      </div>
+
+      <div class="testimonial">
+        <p>
+          “Perfect for startup landing pages and portfolios.
+          The futuristic style is incredible.”
+        </p>
+
+        <h4>- Daniel Smith</h4>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-title">
+      <h2>Contact Us</h2>
+      <p>
+        Send us your message anytime.
+      </p>
+    </div>
+
+    <div class="contact">
+      <form>
+        <input type="text" placeholder="Your Name">
+        <input type="email" placeholder="Your Email">
+        <textarea placeholder="Your Message"></textarea>
+
+        <button class="btn primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      © 2026 FutureUI. Designed with ❤️ using HTML & CSS.
+    </p>
+  </footer>
+
+</body>
+</html>
