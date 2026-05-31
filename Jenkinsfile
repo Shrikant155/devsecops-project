@@ -4,9 +4,26 @@ pipeline {
     stage('checkout')
            {
        steps {
-         git branch: 'main',
-         url: 'https://github.com/Shrikant155/devsecops-project.git',
-          credentialsId: 'github-cred-id'
+            withVault(
+          configuration: [
+            vaultUrl: 'http://127.0.0.1:8200',
+            vaultCredentialId: 'vault-cred-id'   // Jenkins credential ID from Step 5
+          ],
+          vaultSecrets: [[
+            path: 'secret/jenkins/github',        // path you stored in Step 2
+            engineVersion: 2,                     // because you enabled kv-v2
+            secretValues: [[
+              envVar: 'GITHUB_TOKEN',             // env var name in pipeline
+              vaultKey: 'token'                   // key name you stored in Vault
+            ]]
+          ]]
+        ) 
+         {
+      git branch: 'main',
+          url: 'https://$GITHUB_TOKEN@github.com/Shrikant155/devsecops-project.git'
+    }
+         
+          
        }
      }
     
