@@ -47,7 +47,7 @@ stages
             path: 'secret/jenkins/docker',        // path you stored in Step 2
             engineVersion: 2,                     // because you enabled kv-v2
             secretValues: [[
-              envVar: 'GITHUB_TOKEN',             // env var name in pipeline
+              envVar: 'DOCKER_TOKEN',             // env var name in pipeline
               vaultKey: 'token'                   // key name you stored in Vault
             ]]
           ]]
@@ -55,7 +55,7 @@ stages
 
          
                sh '''
-                  echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                  echo "$DOCKER_TOKEN" | docker login -u shrikant155  --password-stdin
                   docker tag k8s-app:v5 shrikant155/k8s-app:v5
                   docker push  shrikant155/k8s-app:v5
                  '''
