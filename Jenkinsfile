@@ -1,6 +1,5 @@
 pipeline {
   agent any
-             git clone https://${GITHUB_TOKEN}@github.com/Shrikant155/devsecops-project.git . 
 
  stage('checkout')
            {
