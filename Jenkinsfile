@@ -6,7 +6,7 @@ pipeline {
            steps {
         withVault(
             configuration: [
-                vaultUrl: 'http://10.134.52.18:8200',
+                vaultUrl: 'http://127.0.0.1:8200',
                 vaultCredentialId: 'vault-cred-id'
             ],
             vaultSecrets: [[
@@ -19,7 +19,8 @@ pipeline {
             ]]
         ) {
             sh '''
-               # git clone https://${GITHUB_TOKEN}@github.com/Shrikant155/devsecops-project.git .
+            echo "token-length: ${#GITHUB_TOKEN}"           
+             git clone https://${GITHUB_TOKEN}@github.com/Shrikant155/devsecops-project.git . 
             
              '''
         }
