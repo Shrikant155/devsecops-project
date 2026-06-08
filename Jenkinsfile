@@ -33,11 +33,8 @@ pipeline {
                 withSonarQubeEnv('shrikant-sonar-scanner') {
                     sh '''
                         
-                      /opt/sonar-scanner/bin/sonar-scanner \
-                     -Dsonar.projectKey=my-devops-project \
-                     -Dsonar.projectName="devops web proejct" \
-                     -Dsonar.sources=. \
-                     -Dsonar.java.binaries=.
+                      /opt/sonar-scanner/bin/sonar-scanner 
+
                     '''
                 }
             }
@@ -56,10 +53,24 @@ pipeline {
         }
 
       stage('docker push') { 
-           steps {
-              withCredentials([usernamePassword(credentialsId: 'docker-hub-cred-id',
-                                                 usernameVariable: 'DOCKER_USER', 
-                                                 passwordVariable: 'DOCKER_PASS')]) {
+            steps {
+                   steps {
+            withVault(
+          configuration: [
+            vaultUrl: 'http://127.0.0.1:8200',
+            vaultCredentialId: 'vault-cred-id'   // Jenkins credential ID from Step 5
+          ],
+          vaultSecrets: [[
+            path: 'secret/jenkins/docker',        // path you stored in Step 2
+            engineVersion: 2,                     // because you enabled kv-v2
+            secretValues: [[
+              envVar: 'GITHUB_TOKEN',             // env var name in pipeline
+              vaultKey: 'token'                   // key name you stored in Vault
+            ]]
+          ]]
+        )
+
+         
                sh '''
                   echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                   docker tag k8s-app:v5 shrikant155/k8s-app:v5
