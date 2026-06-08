@@ -6,7 +6,7 @@ pipeline {
        steps {
             withVault(
           configuration: [
-            vaultUrl: 'http://127.0.0.1:8200',
+            vaultUrl: 'http://10.134.52.18:8200',
             vaultCredentialId: 'vault-cred-id'   // Jenkins credential ID from Step 5
           ],
           vaultSecrets: [[
