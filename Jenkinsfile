@@ -1,32 +1,16 @@
 pipeline {
   agent any
-  stages {
-    stage('checkout')
-         {
-           steps {
-        withVault(
-            configuration: [
-                vaultUrl: 'http://127.0.0.1:8200',
-                vaultCredentialId: 'vault-cred-id'
-            ],
-            vaultSecrets: [[
-                path: 'secret/jenkins/github',
-                engineVersion: 2,
-                secretValues: [[
-                    envVar: 'GITHUB_TOKEN',
-                    vaultKey: 'token'
-                ]]
-            ]]
-        ) {
-            sh '''
-            echo "token-length: ${#GITHUB_TOKEN}"           
              git clone https://${GITHUB_TOKEN}@github.com/Shrikant155/devsecops-project.git . 
-            
-             '''
-        }
-    }    
-     
-  }
+
+ stage('checkout')
+           {
+       steps {
+         git branch: 'main',
+         url: 'https://github.com/Shrikant155/devsecops-project.git',
+          credentialsId: 'github-cred-id'
+       }
+     }
+
      stage('sonarqube-test-code') {
             steps {
                 withSonarQubeEnv('shrikant-sonar-scanner') {
