@@ -19,8 +19,9 @@ pipeline {
             ]]
         ) {
             sh '''
-                git clone https://${GITHUB_TOKEN}@github.com/Shrikant155/devsecops-project.git .
-            '''
+               # git clone https://${GITHUB_TOKEN}@github.com/Shrikant155/devsecops-project.git .
+            
+             '''
         }
     }    
      
